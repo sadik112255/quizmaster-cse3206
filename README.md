@@ -1,4 +1,4 @@
-# QuizMaster — Online Quiz Management System
+# QuizMaster — Online Quiz Management System (CSE 3206)
 
 [![QuizMaster CI](https://github.com/sadik112255/quizmaster-cse3206/actions/workflows/ci.yml/badge.svg)](https://github.com/sadik112255/quizmaster-cse3206/actions/workflows/ci.yml)
 
