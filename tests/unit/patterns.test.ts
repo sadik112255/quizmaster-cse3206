@@ -83,6 +83,8 @@ describe('Design Patterns: QuestionFactory & ScoringStrategy', () => {
     );
 
     expect(result.score).toBe(0);
+    expect(result.totalMarks).toBe(4);
+    expect(result.percentage).toBe(0);
     expect(result.passed).toBe(false);
   });
 });
