@@ -56,7 +56,7 @@ export const StudentDashboard: React.FC = () => {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-slate-900">
-          Welcome back, {profile?.full_name ?? 'Student'}
+          Welcome, {profile?.full_name ?? 'Student'}!
         </h1>
         <p className="mt-1 text-sm text-slate-500">Track your quizzes and performance</p>
       </div>
