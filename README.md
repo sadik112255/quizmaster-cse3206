@@ -1,5 +1,7 @@
 # QuizMaster — Online Quiz Management System
 
+[![QuizMaster CI](https://github.com/sadik112255/quizmaster-cse3206/actions/workflows/ci.yml/badge.svg)](https://github.com/sadik112255/quizmaster-cse3206/actions/workflows/ci.yml)
+
 **Course:** CSE 3206 – Software Engineering Sessional (22 Series, RUET)  
 **Tech Stack:** React, TypeScript, Vite, Tailwind CSS, React Router, React Hook Form, Zod, Recharts, Supabase (PostgreSQL + Auth + RLS + RPC), Vitest, React Testing Library, Selenium, GitHub Actions.
 
@@ -43,6 +45,7 @@
    2. `supabase/migrations/002_rls_policies.sql`
    3. `supabase/migrations/003_rpc_functions.sql`
    4. `supabase/seed.sql` (optional sample quiz)
+   5. `supabase/seed_demo_accounts.sql` (creates demo Admin `admin@quizmaster.edu` / `Admin@1234` and Student `student@quizmaster.edu` / `Student@1234`)
 
    To promote a user to Admin, run in Supabase SQL Editor:
    ```sql
