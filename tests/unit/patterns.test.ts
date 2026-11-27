@@ -71,4 +71,18 @@ describe('Design Patterns: QuestionFactory & ScoringStrategy', () => {
     expect(result.percentage).toBe(37.5);
     expect(result.passed).toBe(false);
   });
+
+  it('clamps NegativeMarkingStrategy score at 0 when all answers are wrong', () => {
+    const evaluator = new QuizEvaluator(new NegativeMarkingStrategy(0.5));
+    const result = evaluator.evaluate(
+      [
+        { marks: 2, isSelected: true, isCorrect: false },
+        { marks: 2, isSelected: true, isCorrect: false },
+      ],
+      50
+    );
+
+    expect(result.score).toBe(0);
+    expect(result.passed).toBe(false);
+  });
 });
