@@ -30,23 +30,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     let mounted = true;
 
-    supabase.auth.getSession().then(async ({ data }) => {
-      if (!mounted) return;
-      setSession(data.session);
-      if (data.session?.user) {
-        await loadProfile(data.session.user.id);
-      }
-      if (mounted) setLoading(false);
-    });
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        if (!mounted) return;
+        setSession(data.session);
+        if (!data.session) setLoading(false);
+      })
+      .catch(() => {
+        if (mounted) setLoading(false);
+      });
 
-    const { data: listener } = supabase.auth.onAuthStateChange(async (_event, nextSession) => {
+    // Keep callback synchronous to avoid Supabase auth lock deadlocks across tabs
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      if (!mounted) return;
       setSession(nextSession);
-      if (nextSession?.user) {
-        await loadProfile(nextSession.user.id);
-      } else {
+      if (!nextSession) {
         setProfile(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => {
@@ -54,6 +56,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       listener.subscription.unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    const userId = session?.user?.id;
+    if (!userId) return;
+
+    setLoading(true);
+    authAdapter
+      .getCurrentProfile(userId)
+      .then((p) => {
+        if (active) setProfile(p);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [session?.user?.id]);
 
   const signIn = async (email: string, password: string) => {
     await authAdapter.signIn(email, password);

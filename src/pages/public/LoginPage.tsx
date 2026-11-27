@@ -50,8 +50,8 @@ export const LoginPage: React.FC = () => {
   };
 
   const fillDemo = (email: string, password: string) => {
-    setValue('email', email);
-    setValue('password', password);
+    setValue('email', email, { shouldValidate: true, shouldDirty: true, shouldTouch: true });
+    setValue('password', password, { shouldValidate: true, shouldDirty: true, shouldTouch: true });
   };
 
   return (
