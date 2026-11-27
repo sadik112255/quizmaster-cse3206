@@ -8,7 +8,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Alert } from '../../components/common/UI';
 
 export const LoginPage: React.FC = () => {
-  const { signIn, user, profile } = useAuth();
+  const { signIn, user, profile, loading } = useAuth();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState<string | null>(null);
 
@@ -26,8 +26,12 @@ export const LoginPage: React.FC = () => {
       navigate(profile.role === 'admin' ? '/admin/dashboard' : '/student/dashboard', {
         replace: true,
       });
+    } else if (user && !loading && !profile) {
+      setServerError(
+        'Signed in, but could not load your profile. Run supabase/migrations/004_grants_and_fixes.sql in Supabase SQL Editor.'
+      );
     }
-  }, [user, profile, navigate]);
+  }, [user, profile, loading, navigate]);
 
   const onSubmit = async (values: LoginFormValues) => {
     setServerError(null);
